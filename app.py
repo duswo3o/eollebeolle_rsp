@@ -40,14 +40,62 @@ with app.app_context():
 #################################################################
 ##################################################################
 
+def rock_paper_sissor(player, computer):
+    # print(f"사용자: {player}, 컴퓨터: {computer}")
+    if player == computer:
+        return "무승부"
+    elif (player == '가위' and computer == '보') | (player == '바위' and computer == '가위') | (player == '보' and computer == '바위'):
+        return "승리"
+    else:
+        return "패배"
+
+
+
 @app.route("/")
 def home():
 
+    player = request.args.get("userchoice")
+    computer = ""
+    game_result = ""
 
-    ####### 코드 작성 ############
+    # print(player)
+    
+    if player == "reset":
+        # 데이터베이스 초기화
+        db.session.query(RockPaperSissor).delete()
+        db.session.commit()
+    
 
 
-    return render_template("game.html")
+    if player in ["가위","바위","보"]:
+        computer = random.choice(["가위","바위","보"])
+        game_result = rock_paper_sissor(player,computer)
+        
+        # 데이터베이스에 저장
+        rps = RockPaperSissor(com=computer, user=player, result=game_result)
+        db.session.add(rps)
+        db.session.commit()
+
+
+    record_list = RockPaperSissor.query.all()
+    win = RockPaperSissor.query.filter_by(result="승").count()
+    lose = RockPaperSissor.query.filter_by(result="패").count()
+    tie = RockPaperSissor.query.filter_by(result="무").count()
+
+
+
+    context = {'player':player,
+                'computer':computer,
+                'result': game_result,
+                "win" : win,
+                'lose' : lose,
+                'tie' : tie,
+                'record_list':record_list
+                }
+
+    return render_template("game.html", data=context)
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
