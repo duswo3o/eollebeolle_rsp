@@ -40,6 +40,7 @@ with app.app_context():
 #################################################################
 ##################################################################
 
+# 가위바위보 함수
 def rock_paper_sissor(player, computer):
     # print(f"사용자: {player}, 컴퓨터: {computer}")
     if player == computer:
@@ -54,33 +55,34 @@ def rock_paper_sissor(player, computer):
 @app.route("/")
 def home():
 
-    player = request.args.get("userchoice")
+    player = request.args.get("userchoice") # game.html의 form에서 get방식으로 값을 받아 옴
     computer = ""
     game_result = ""
 
     # print(player)
     
+    # reset 버튼을 눌렀을 땨
     if player == "reset":
         # 데이터베이스 초기화
         db.session.query(RockPaperSissor).delete()
         db.session.commit()
     
 
-
+    # 가위바위보 이미지 중 하나를 선택했을 때
     if player in ["가위","바위","보"]:
-        computer = random.choice(["가위","바위","보"])
-        game_result = rock_paper_sissor(player,computer)
+        computer = random.choice(["가위","바위","보"]) # 컴퓨터가 가위바위보중 랜덤으로 선택
+        game_result = rock_paper_sissor(player,computer) # 게임 결과
         
         # 데이터베이스에 저장
         rps = RockPaperSissor(com=computer, user=player, result=game_result)
-        db.session.add(rps)
-        db.session.commit()
+        db.session.add(rps) # 데이터베이스에 추가
+        db.session.commit() # 데이터베이스에 저장
 
 
-    record_list = RockPaperSissor.query.all()
-    win = RockPaperSissor.query.filter_by(result="승").count()
-    lose = RockPaperSissor.query.filter_by(result="패").count()
-    tie = RockPaperSissor.query.filter_by(result="무").count()
+    record_list = RockPaperSissor.query.all() # 데이터베이스에 있는 모든 기록 불러오기
+    win = RockPaperSissor.query.filter_by(result="승리").count()
+    lose = RockPaperSissor.query.filter_by(result="패배").count()
+    tie = RockPaperSissor.query.filter_by(result="무승부").count()
 
 
 

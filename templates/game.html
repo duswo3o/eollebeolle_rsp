@@ -49,7 +49,9 @@
             <div class="card-body align-items-center">
                 <h5>무엇을 선택하시겠습니까?</h5>
                 <form action="{{url_for('home')}}" class="btn-toolbar justify-content-around" method="GET">
-                    <!-- <input class="btn btn-outline-secondary" type="image" src="../static/가위.png" alt="이미지 없을 때 대체 텍스트" name="가위" value="가위" width="75px"> -->
+                    <!-- #################### -->
+                    <!-- 가위바위보 이미지 수정 필요 -->
+                    <!-- #################### -->
                     <input id="sissors" class="btn btn-outline-secondary" type="submit" name="userchoice" value="가위"
                         width="75px">
                     <input id="rock" class="btn btn-outline-secondary" type="submit" name="userchoice" value="바위"
@@ -74,7 +76,13 @@
                 <form action="{{url_for('home')}}" class="btn-toolbar justify-content-around" method="GET">
                     <input id="reset" class="btn btn-outline-secondary" type="submit" name="userchoice" value="reset">
                 </form>
+            </div>
 
+            <div>
+                <!-- 
+                    가위바위보 통계 작성해야 됨
+                    승:0, 무:0, 패:0 이거!! 
+                                            -->
             </div>
         </div>
     </div>
@@ -104,14 +112,6 @@
 
         </table>
     </div>
-
-
-
-
-
-
-
-
 
     <!-- Bootstrap CDN : JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
