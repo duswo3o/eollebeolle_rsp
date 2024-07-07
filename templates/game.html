@@ -47,7 +47,8 @@
                 얼레벌레조의 가위바위보 게임
             </div>
             <div class="card-body align-items-center">
-                <h5>무엇을 선택하시겠습니까?</h5>
+                <h2>무엇을 선택하시겠습니까?</h2>
+                <br>
                 <form action="{{url_for('home')}}" class="btn-toolbar justify-content-around" method="GET">
                     <!-- #################### -->
                     <!-- 가위바위보 이미지 수정 필요 -->
@@ -62,9 +63,9 @@
             </div>
 
             {% if data %}
-                    <p>컴퓨터의 선택은 "{{data.computer}}" 였습니다.</p>
+            <p>컴퓨터의 선택은 "{{data.computer}}" 였습니다.</p>
             {% endif %}
-            
+
 
 
             <div>
@@ -78,14 +79,17 @@
                 </form>
             </div>
 
-            <div>
-                <!-- 
-                    가위바위보 통계 작성해야 됨
-                    승:0, 무:0, 패:0 이거!! 
-                                            -->
-            </div>
         </div>
     </div>
+    <br>
+    {% if data %}
+    <div class="mb-3 d-flex justify-content-center">
+        <button type="button" class="btn btn-success">승 : {{data.win}}</button>
+        <button type="button" class="btn btn-success">무 : {{data.tie}}</button>
+        <button type="button" class="btn btn-success">패 : {{data.lose}}</button>
+    </div>
+    {% endif %}
+
     <br>
     <div class="mb-3">
         <table class="table">
