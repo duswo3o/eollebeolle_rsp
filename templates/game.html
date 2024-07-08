@@ -26,15 +26,16 @@
 
     <div class="mb-3">
         <form action="" method="post" id="formrsp">
-            <button class="btn {% if data.guest == "가위" %} btn-primary {% else %} btn-outline-primary {% endif %}"
-                    name="guest" value="가위">가위
-            </button>
-            <button class="btn {% if data.guest == "바위" %} btn-primary {% else %} btn-outline-primary {% endif %}"
-                    name="guest" value="바위">바위
-            </button>
-            <button class="btn {% if data.guest == "보" %} btn-primary {% else %} btn-outline-primary {% endif %}"
-                    name="guest" value="보">보
-            </button>
+            <input type="button"
+                   class="btn {% if data.guest == "가위" %} btn-primary {% else %} btn-outline-primary {% endif %}"
+                   name="guest" value="가위" onclick="submitForm(this.value)">
+            <input type="button"
+                   class="btn {% if data.guest == "바위" %} btn-primary {% else %} btn-outline-primary {% endif %}"
+                   name="guest" value="바위" onclick="submitForm(this.value)">
+            <input type="button"
+                   class="btn {% if data.guest == "보" %} btn-primary {% else %} btn-outline-primary {% endif %}"
+                   name="guest" value="보" onclick="submitForm(this.value)">
+
         </form>
     </div>
 
@@ -72,11 +73,18 @@
 </div>
 
 <script>
-    document.querySelectorAll('.rsp-btn').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-            document.getElementById("formrsp").submit();
-        })
-    })
+    function submitForm(value) {
+        var form = document.getElementById('formrsp');
+
+        // Create a new input element and set its attributes
+        var input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'guest'; // 'guest' is the name of the input field in your form
+        input.value = value; // value is the value that you want to send to your server
+
+        form.appendChild(input);
+        form.submit();
+    }
 </script>
 
 </body>
