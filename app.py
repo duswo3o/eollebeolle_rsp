@@ -9,6 +9,7 @@ from flask import Flask, render_template, request
 import random
 from flask_sqlalchemy import SQLAlchemy
 import os
+from sqlalchemy import func
 
 
 
@@ -42,13 +43,20 @@ with app.app_context():
 
 @app.route("/")
 def home():
+
+    win = db.session.query(func.count(RockPaperSissor.result)).filter(RockPaperSissor.result == "승").scalar()
+    lost = db.session.query(func.count(RockPaperSissor.result)).filter(RockPaperSissor.result == "패").scalar()
+    same =  db.session.query(func.count(RockPaperSissor.result)).filter(RockPaperSissor.result == "무").scalar()
+
+    report = {
+        "win": win,
+        "lost":lost,
+        "same":same,
+    }
+
     db_value = db.session.query(RockPaperSissor).all()
-    return render_template("game.html", historys=db_value)
 
-    ####### 코드 작성 ############
-
-
-    return render_template("game.html")
+    return render_template("game.html", data=report, historys=db_value)
 
 if __name__ == '__main__':
     app.run(debug=True)
