@@ -46,20 +46,14 @@ def home():
     ####### 코드 작성 ############
     rsp = ["가위", "바위", "보"]
     rsp_data = {}  # 데이터
-
-    # q = 0
     t = 0
-    # w = 0
-    # l = 0
-    # d = 0
 
-    # reset 버튼을 눌렀을 땨
-    
 
     if request.method == "POST":
         # POST 방식으로 저장 할 경우 form.get
         guest = request.form.get("guest")  # 게스트 input name="guest"
 
+        # reset 버튼을 눌렀을 때
         if guest == "reset":
             # 데이터베이스 초기화
             db.session.query(RockPaperSissor).delete()
