@@ -5,34 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        /* html,
-        body {
-            margin: 0;
-            height: 100%;
-            overflow: hidden;
-        } */
 
-        #sissors {
-            background-image: url('../static/가위.png');
-            height: 200px;
-            width: 200px;
-        }
-
-        #rock {
-            background-image: url('../static/바위.png');
-            height: 200px;
-            width: 200px;
-        }
-
-        #paper {
-            background-image: url('../static/보.png');
-            height: 200px;
-            width: 200px;
-        }
-    </style>
-
-    <!-- Bootstrap CDN : CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 
@@ -40,87 +13,90 @@
 
 <body>
 
-    <!-- <h1>가위바위보 게임</h1> -->
-    <div class="container d-flex align-items-center">
-        <div class="card text-center d-flex w-100">
-            <div class="card-header">
-                얼레벌레조의 가위바위보 게임
-            </div>
-            <div class="card-body align-items-center">
-                <h2>무엇을 선택하시겠습니까?</h2>
-                <br>
-                <form action="{{url_for('home')}}" class="btn-toolbar justify-content-around" method="GET">
-                    <!-- #################### -->
-                    <!-- 가위바위보 이미지 수정 필요 -->
-                    <!-- #################### -->
-                    <input id="sissors" class="btn btn-outline-secondary" type="submit" name="userchoice" value="가위"
-                        width="75px">
-                    <input id="rock" class="btn btn-outline-secondary" type="submit" name="userchoice" value="바위"
-                        width="75px">
-                    <input id="paper" class="btn btn-outline-secondary" type="submit" name="userchoice" value="보"
-                        width="75px">
-                </form>
-            </div>
+    <div class="container text-center">
+        <h1>가위바위보 게임</h1>
 
+        {% if data %}
+        <div class="mb-3">인간이 알파고 상대로 <span class="text-danger">{{ data.msg }}</span></div>
+        {% endif %}
+
+        <div id="computer mb-3 " class="computer mb-3">
             {% if data %}
-            <p>컴퓨터의 선택은 "{{data.computer}}" 였습니다.</p>
+            <img src="{{ url_for('static', filename=data.bot + '.png') }}">
             {% endif %}
-
-
-
-            <div>
-                {% if data %}
-                <div> 가위바위보 결과 >>>>>{{ data.result }}<<<<< 입니다!!</div>
-                        {% endif %}
-                </div>
-                <br>
-                <form action="{{url_for('home')}}" class="btn-toolbar justify-content-around" method="GET">
-                    <input id="reset" class="btn btn-outline-secondary" type="submit" name="userchoice" value="reset">
-                </form>
-            </div>
-
         </div>
+
+        <div class="mb-3">
+            <form action="" method="post" id="formrsp">
+                <input type="button" class="btn {% if data.guest == " 가위" %} btn-primary {% else %} btn-outline-primary
+                    {% endif %}" name="guest" value="가위" onclick="submitForm(this.value)">
+                <input type="button" class="btn {% if data.guest == " 바위" %} btn-primary {% else %} btn-outline-primary
+                    {% endif %}" name="guest" value="바위" onclick="submitForm(this.value)">
+                <input type="button" class="btn {% if data.guest == " 보" %} btn-primary {% else %} btn-outline-primary
+                    {% endif %}" name="guest" value="보" onclick="submitForm(this.value)">
+
+            </form>
+        </div>
+        <div>
+            <form action="{{url_for('home')}}" class="btn-toolbar justify-content-around" method="post">
+                <input id="reset" class="btn btn-outline-secondary" type="submit" name="guest" value="reset">
+            </form>
+        </div>
+
+        <div class="mb-3">
+            플레이 횟수 = {{ data.total }} 게임
+        </div>
+
+        <h3> 결과 통계 </h3>
+    <div style="border: 1px solid black; padding: 10px;"> 글이 잘 기록되나? </div>
+    <div class="result-container">
+        <div class="result-box">승: {{report.win}}</div>
+        <div class="result-box">패: {{report.lost}}</div>
+        <div class="result-box">무: {{report.same}}</div>
     </div>
-    <br>
-    {% if data %}
-    <div class="mb-3 d-flex justify-content-center">
-        <button type="button" class="btn btn-success">승 : {{data.win}}</button>
-        <button type="button" class="btn btn-success">무 : {{data.tie}}</button>
-        <button type="button" class="btn btn-success">패 : {{data.lose}}</button>
-    </div>
-    {% endif %}
-
-    <br>
-    <div class="mb-3">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">컴퓨터</th>
-                    <th scope="col">사용자</th>
-                    <th scope="col">결과</th>
-                </tr>
-            </thead>
-            <tbody>
-
-                {% for element in data.record_list %}
-                <tr>
-                    <td scope="row">{{ element.id }}</td>
-                    <td>{{ element.com }}</td>
-                    <td>{{ element.user }}</td>
-                    <td>{{ element.result }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-
-
-        </table>
-    </div>
-
-    <!-- Bootstrap CDN : JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
         </script>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">컴퓨터</th>
+                <th scope="col">사용자</th>
+                <th scope="col">결과</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for history in historys %}
+            <tr>
+                <th scope="row">{{ history.id }}</th>
+                <td>{{ history.com }}</td>
+                <td>{{ history.user }}</td>
+                <td>{{ history.result }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+    </div>
+
+    <script>
+        function submitForm(value) {
+            var form = document.getElementById('formrsp');
+
+            // Create a new input element and set its attributes
+            var input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'guest'; // 'guest' is the name of the input field in your form
+            input.value = value; // value is the value that you want to send to your server
+
+            form.appendChild(input);
+            form.submit();
+        }
+    </script>
+
 </body>
 
 </html>
