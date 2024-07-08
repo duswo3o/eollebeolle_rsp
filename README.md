@@ -60,4 +60,4 @@
 - JavaScript
 - 기술스택
 
-![image](./얼레벌레 기술스택.jpeg)
+![image](./얼레벌레_기술스택.jpeg)
