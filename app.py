@@ -81,7 +81,7 @@ def home():
             db.session.add(gh)
             db.session.commit()
 
-        t = RockPaperSissor.query.order_by(RockPaperSissor.id.desc()).count()  # 플레이어 횟수
+        t = RockPaperSissor.query.order_by(RockPaperSissor.id.desc()).count()  # 플레이 횟수
 
         rsp_data["msg"] = r_msg
         rsp_data["guest"] = guest
