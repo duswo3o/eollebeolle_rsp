@@ -1,3 +1,6 @@
+
+![image](./eollebeolle_rsp.png)
+
 ## 01. 프로젝트 개요
 - 프로젝트명 : 가위바위보 게임 웹으로 만들기
 - 프로젝트 소개
@@ -14,7 +17,7 @@
   |이름|역할|
   |:--|:--|
   |박연재|문서작성, reset 기능 추가|
-  |이영훈|가위바위보 게임 html에 flask 연결|
+  |이영훈|가위바위보 게임 html에 flask 연결, 데이터베이스에 게임 결과 추가|
   |이예지|가위바위보 게임 html 코드 작성|
   |임만열|가위바위보 데이터베이스 웹 구현|
   |김상아|가위바위보 데이터베이스 웹 구현|
@@ -46,3 +49,15 @@
 </details>
 
 ## 04. 기타
+- python 3.9.6
+- Flask 3.0.3
+- Flask-SQLAlchemy 3.1.1
+- SQLAlchemy 2.0.31
+- HTML
+- SQLite
+- Bootstrap
+- CSS
+- JavaScript
+- 기술스택
+
+![image](./얼레벌레 기술스택.jpeg)
